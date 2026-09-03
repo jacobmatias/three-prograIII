@@ -10,12 +10,18 @@ public class Ficha {
         this.valor = random.nextInt(2) + 1;
         ;
     }
+    public Ficha (int valor) {
+
+        this.valor = valor;
+
+    }
 
     public int getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
-        this.valor = valor;
+    @Override
+    public String toString() {
+        return String.valueOf(valor);
     }
 }

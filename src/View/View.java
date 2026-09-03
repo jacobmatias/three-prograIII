@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import Juego.Ficha;
+import Juego.Juego;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,7 +21,8 @@ public class View {
 
     private JFrame frame;
     private JLabel[][] jlabels = new JLabel[4][4];
-    Ficha [][] fichas = new Ficha[4][4];
+    Juego juego=new Juego();
+    Ficha [][] fichas = juego.MatrizInicial();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -39,7 +41,7 @@ public class View {
 
     private void initialize() {
         frame = new JFrame();
-        frame.getContentPane().setBackground(Color.BLACK);
+        frame.getContentPane().setBackground(Color.white);
         frame.setBounds(100, 100, 574, 575);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
@@ -86,7 +88,7 @@ public class View {
 
         for (int x = 0; x < jlabels.length; x++) {
             for (int y = 0; y < jlabels.length; y++) {
-                fichas[x][y] = new Ficha ();
+                fichas[x][y] = fichas[x][y];
                 jlabels[x][y] = new JLabel();
                 jlabels[x][y].setText(" " + String.valueOf(fichas[x][y].getValor()));
                 jlabels[x][y].setOpaque(true);
