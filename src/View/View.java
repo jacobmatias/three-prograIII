@@ -57,6 +57,7 @@ public class View {
         flechaArriba.setBackground(Color.GREEN);
         flechaArriba.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	
             }
         });
         flechaArriba.setBounds(237, 427, 50, 35);
