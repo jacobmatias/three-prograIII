@@ -1,12 +1,14 @@
 package View;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import Juego.Ficha;
 import Juego.Juego;
+import Juego.PruebaMatriz;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,7 +24,7 @@ public class View {
     private JFrame frame;
     private JLabel[][] jlabels = new JLabel[4][4];
     Juego juego=new Juego();
-    Ficha [][] fichas = juego.MatrizInicial();
+    int [][] matriz = PruebaMatriz.crearMatrizInicial();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -55,9 +57,11 @@ public class View {
 
         JButton flechaArriba = new JButton("▲");
         flechaArriba.setBackground(Color.GREEN);
+        flechaArriba.setFocusable(false);
         flechaArriba.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	
+            	PruebaMatriz.callMoverArriba();
+            	actualizarTableroView();
             }
         });
         flechaArriba.setBounds(237, 427, 50, 35);
@@ -65,46 +69,96 @@ public class View {
 
         JButton flechaAbajo = new JButton("▼");
         flechaAbajo.setBackground(Color.GREEN);
+        flechaAbajo.setFocusable(false);
+        flechaAbajo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	PruebaMatriz.callMoverAbajo();
+            	actualizarTableroView();
+            }
+        });
         flechaAbajo.setBounds(237, 490, 50, 35);
         frame.getContentPane().add(flechaAbajo);
 
         JButton flechaDerecha = new JButton("▶");
         flechaDerecha.setBackground(Color.GREEN);
+        flechaDerecha.setFocusable(false);
+        flechaDerecha.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	PruebaMatriz.callMoverDerecha();
+            	actualizarTableroView();
+            }
+        });
         flechaDerecha.setBounds(299, 459, 50, 35);
         frame.getContentPane().add(flechaDerecha);
 
-        JButton fechaIzquierda = new JButton("◀");
-        fechaIzquierda.setBackground(Color.GREEN);
-        fechaIzquierda.addActionListener(new ActionListener() {
+        JButton flechaIzquierda = new JButton("◀");
+        flechaIzquierda.setBackground(Color.GREEN);
+        flechaIzquierda.setFocusable(false);
+        flechaIzquierda.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	PruebaMatriz.callMoverIzquierda();
+            	actualizarTableroView();
             }
         });
-        fechaIzquierda.setBounds(177, 459, 50, 35);
-        frame.getContentPane().add(fechaIzquierda);
+        flechaIzquierda.setBounds(177, 459, 50, 35);
+        frame.getContentPane().add(flechaIzquierda);
 
         int ejeX = 132;
         int ejeY = 96;
         int width = 70;
         int height = 70;
 
-        for (int x = 0; x < jlabels.length; x++) {
-            for (int y = 0; y < jlabels.length; y++) {
-                fichas[x][y] = fichas[x][y];
-                jlabels[x][y] = new JLabel();
-                jlabels[x][y].setText(" " + String.valueOf(fichas[x][y].getValor()));
-                jlabels[x][y].setOpaque(true);
-                jlabels[x][y].setBackground(Color.white);
-                jlabels[x][y].setHorizontalAlignment(SwingConstants.CENTER);
-                jlabels[x][y].setFont(new Font("Arial", Font.BOLD, 35));
-                jlabels[x][y].setBorder(BorderFactory.createLineBorder(Color.RED));
-                jlabels[x][y].setBounds(ejeX, ejeY, width, height);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                jlabels[i][j] = new JLabel();
+                int valorFicha = PruebaMatriz.devolverValor(i, j);
+                jlabels[i][j].setText(String.valueOf(valorFicha));
+                jlabels[i][j].setOpaque(true);
+                jlabels[i][j].setBackground(Color.white);
+                jlabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+                jlabels[i][j].setFont(new Font("Arial", Font.BOLD, 35));
+                jlabels[i][j].setBorder(BorderFactory.createLineBorder(Color.RED));
+                jlabels[i][j].setBounds(ejeX, ejeY, width, height);
 
-                frame.add(jlabels[x][y]);
+                frame.add(jlabels[i][j]);
                 ejeX += 68;
             }
             ejeX = 132;
             ejeY +=68;
         }
+        PruebaMatriz.generarAleatorio(1, 4);
+        frame.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_UP) {
+                    PruebaMatriz.callMoverArriba();
+                    actualizarTableroView();
+                }
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_DOWN) {
+                    PruebaMatriz.callMoverAbajo();
+                    actualizarTableroView();
+                }
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_LEFT) {
+                    PruebaMatriz.callMoverIzquierda();
+                    actualizarTableroView();
+                }
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_RIGHT) {
+                    PruebaMatriz.callMoverDerecha();
+                    actualizarTableroView();
+                }
+            }
+        });
 
+        frame.setFocusable(true);
+        frame.requestFocusInWindow();
+    }
+    
+    private void actualizarTableroView() {
+    	for (int i = 0; i < 4; i++) {
+    		for (int j = 0; j < 4; j++) {
+            	int nuevoValor = PruebaMatriz.devolverValor(i, j);
+            	jlabels[i][j].setText(String.valueOf(nuevoValor));
+        	}
+    	}    
     }
 }

@@ -9,6 +9,7 @@ public class PruebaMatriz {
 
 	static int puntaje = 0;
 	static int nextRandom;
+	static int[][] matriz;
     public static void main(String[] args) {
 
     	//prueba aleatorio
@@ -44,21 +45,48 @@ public class PruebaMatriz {
         imprimirMatriz(miMatriz2);
         
         moverDerecha(miMatriz2);
+        imprimirMatriz(miMatriz2);moverDerecha(miMatriz2);
+        imprimirMatriz(miMatriz2);moverDerecha(miMatriz2);
+        imprimirMatriz(miMatriz2);moverDerecha(miMatriz2);
         imprimirMatriz(miMatriz2);
-        moverizquierda(miMatriz2);
-        imprimirMatriz(miMatriz2);
-        moverArriba(miMatriz2);
-        imprimirMatriz(miMatriz2);
-        moverAbajo(miMatriz2);
-        imprimirMatriz(miMatriz2);
+//        moverIzquierda(miMatriz2);
+//        imprimirMatriz(miMatriz2);
+//        moverArriba(miMatriz2);
+//        imprimirMatriz(miMatriz2);
+//        moverAbajo(miMatriz2);
+//        imprimirMatriz(miMatriz2);
         System.out.println(String.valueOf(puntaje));
     } 
+    public static int[][] crearMatrizInicial(){
+    	matriz = new int[4][4];
+    	
+    	List<Integer> lista = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            lista.add(generarAleatorio(1,4));
+        }
+        for (int i = 9; i < 16; i++) {
+            lista.add(0);
+        }
+        Collections.shuffle(lista);
+//        int[][] nuevaMatriz = new int[4][4];
+        
+        int k = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                matriz[i][j] = lista.get(k);
+                k++;
+            }
+        }
+        return matriz;
+    }
+    
+    
+    public static void callMoverDerecha() {
+		moverDerecha(matriz);
+    }
     public static void moverDerecha(int[][] miMatriz2){
     	int[][] nuevaMatriz = miMatriz2;
-    	boolean seMovioFichaEnFila;
-    	int filasQueSeMovieron = 0;
     	for (int i=0;i <= 3; ) {
-    		seMovioFichaEnFila = false;
     		for (int j=3;j >= 0;) {
     			int valor = nuevaMatriz[i][j];
     			if (j<3) {
@@ -79,12 +107,13 @@ public class PruebaMatriz {
     	agregarFicha(nuevaMatriz, 1);
     }
 
-    public static void moverizquierda(int[][] miMatriz2){
+    
+    public static void callMoverIzquierda() {
+		moverIzquierda(matriz);
+    }
+    public static void moverIzquierda(int[][] miMatriz2){
     	int[][] nuevaMatriz = miMatriz2;
-    	boolean seMovioFichaEnFila;
-    	int filasQueSeMovieron = 0;
     	for (int i=0;i <= 3; ) {
-    		seMovioFichaEnFila = false;
     		for (int j=0;j <= 3;) {
     			int valor = nuevaMatriz[i][j];
     			if (j>0) {
@@ -105,12 +134,13 @@ public class PruebaMatriz {
     	agregarFicha(nuevaMatriz, 2);
     }
     
+    
+    public static void callMoverArriba() {
+		moverArriba(matriz);
+    }
     public static void moverArriba(int[][] miMatriz2){
     	int[][] nuevaMatriz = miMatriz2;
-    	boolean seMovioFichaEnColumna;
-    	int columnasQueSeMovieron = 0;
     	for (int j=0;j <= 3; ) {
-    		seMovioFichaEnColumna = false;
     		for (int i=0;i <= 3;) {
     			int valor = nuevaMatriz[i][j];
     			if (i>0) {
@@ -132,25 +162,24 @@ public class PruebaMatriz {
     	agregarFicha(nuevaMatriz, 3);
     }
     
+    
+    public static void callMoverAbajo() {
+		moverAbajo(matriz);
+    }
     public static void moverAbajo(int[][] miMatriz2){
     	int[][] nuevaMatriz = miMatriz2;
-    	boolean seMovioFichaEnColumna;
-    	int columnasQueSeMovieron = 0;
     	for (int j=0;j <= 3; ) {
-    		seMovioFichaEnColumna = false;
     		for (int i=3;i >= 0;) {
     			int valor = nuevaMatriz[i][j];
     			if (i<3) {
     				if (nuevaMatriz[i+1][j] == 0){
     					nuevaMatriz[i+1][j] = nuevaMatriz[i+1][j] + valor;
     					nuevaMatriz[i][j] = 0;
-    					seMovioFichaEnColumna = true;
     				}
     				else if   (valor >= 3 && nuevaMatriz[i+1][j] == valor || nuevaMatriz[i+1][j] == 2 && valor == 1 || nuevaMatriz[i+1][j] == 1 && valor == 2) {
         				nuevaMatriz[i+1][j] = nuevaMatriz[i+1][j] + valor;
         				aumentarPuntaje(nuevaMatriz[i+1][j]);
         				nuevaMatriz[i][j] = 0;
-        				seMovioFichaEnColumna = true;
         			}		
     			}
     			i--;
@@ -183,30 +212,34 @@ public class PruebaMatriz {
   	    		j++;
        		}
        		System.out.println(posicionesVacias);
-       		int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
-       		i = posicionesVacias.get(posicionAleatoria);
+       		if (posicionesVacias.size() > 1) {
+       			int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
+           		j = posicionesVacias.get(posicionAleatoria);
+       		}
+       		else j = posicionesVacias.get(0);
        		matriz[i][j] = nextRandom;
        		nextRandom = generarAleatorio(1,4);
-            System.out.println(nextRandom);
        		return matriz;
        	}
     	if (direccion == 3) {
     		int i=3;
     		int j=0;
        		ArrayList<Integer> posicionesVacias = new ArrayList<>();
-       		for (j =3;j >=0;) {
+       		for (j =0;j <=3;) {
   	    		if (matriz[i][j] == 0) {
   	    			posicionesVacias.add(j);
   	    			
        			}
-  	    		j--;
+  	    		j++;
        		}
        		System.out.println(posicionesVacias);
-       		int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
-       		i = posicionesVacias.get(posicionAleatoria);
+       		if (posicionesVacias.size() > 1) {
+       			int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
+           		j = posicionesVacias.get(posicionAleatoria);
+       		}
+       		else j = posicionesVacias.get(0);
        		matriz[i][j] = nextRandom;
        		nextRandom = generarAleatorio(1,4);
-            System.out.println(nextRandom);
        		return matriz;
        	}
     	if (direccion == 2) {
@@ -221,11 +254,13 @@ public class PruebaMatriz {
   	    		i--;
        		}
        		System.out.println(posicionesVacias);
-       		int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
-       		i = posicionesVacias.get(posicionAleatoria);
+       		if (posicionesVacias.size() > 1) {
+       			int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
+           		i = posicionesVacias.get(posicionAleatoria);
+       		}
+       		else i = posicionesVacias.get(0);
        		matriz[i][j] = nextRandom;
        		nextRandom = generarAleatorio(1,4);
-            System.out.println(nextRandom);
        		return matriz;
        	}
     	if (direccion == 1) {
@@ -240,11 +275,13 @@ public class PruebaMatriz {
   	    		i++;
        		}
        		System.out.println(posicionesVacias);
-       		int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
-       		i = posicionesVacias.get(posicionAleatoria);
+       		if (posicionesVacias.size() > 1) {
+       			int posicionAleatoria = generarAleatorio(1,posicionesVacias.size());
+           		i = posicionesVacias.get(posicionAleatoria);
+       		}
+       		else i = posicionesVacias.get(0);
        		matriz[i][j] = nextRandom;
        		nextRandom = generarAleatorio(1,4);
-            System.out.println(nextRandom);
        		return matriz;
        	}
     	return matriz;
@@ -255,7 +292,13 @@ public class PruebaMatriz {
     }
     public static int generarAleatorio(int desde, int hasta){
     	Random numeroAleatorio = new Random();
-        int random = numeroAleatorio.nextInt(desde, hasta); 
-        return random;
+        nextRandom = numeroAleatorio.nextInt(desde, hasta); 
+        System.out.println(nextRandom);
+        return nextRandom;
     }
+    public static int devolverValor(int i, int j) {
+    	int valor = matriz[i][j];
+    	return valor;
+    }
+    
 }
