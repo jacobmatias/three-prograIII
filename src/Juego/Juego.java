@@ -21,8 +21,8 @@ public class Juego {
         {
             case DERECHA ->{tablero.moverDerecha();}
             case IZQUIERDA -> {}
-            case ABAJO -> {}
-            case ARRIBA -> {}
+            case ABAJO -> {tablero.moverAbajo();}
+            case ARRIBA -> {tablero.moverArriba();}
         }
     }
 

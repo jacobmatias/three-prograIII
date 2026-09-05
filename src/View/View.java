@@ -58,7 +58,8 @@ public class View {
         flechaArriba.setFocusable(false);
         flechaArriba.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                juego.moverFicha(Direcciones.ARRIBA);
+                actualizarTableroView();
             }
         });
         flechaArriba.setBounds(237, 427, 50, 35);
@@ -69,7 +70,8 @@ public class View {
         flechaAbajo.setFocusable(false);
         flechaAbajo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                juego.moverFicha(Direcciones.ABAJO);
+                actualizarTableroView();
             }
         });
         flechaAbajo.setBounds(237, 490, 50, 35);
