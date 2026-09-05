@@ -6,9 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import Juego.Ficha;
-import Juego.Juego;
-import Juego.PruebaMatriz;
+import Juego.*;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -24,7 +23,6 @@ public class View {
     private JFrame frame;
     private JLabel[][] jlabels = new JLabel[4][4];
     Juego juego=new Juego();
-    int [][] matriz = PruebaMatriz.crearMatrizInicial();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -60,8 +58,7 @@ public class View {
         flechaArriba.setFocusable(false);
         flechaArriba.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	PruebaMatriz.callMoverArriba();
-            	actualizarTableroView();
+
             }
         });
         flechaArriba.setBounds(237, 427, 50, 35);
@@ -72,8 +69,7 @@ public class View {
         flechaAbajo.setFocusable(false);
         flechaAbajo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	PruebaMatriz.callMoverAbajo();
-            	actualizarTableroView();
+
             }
         });
         flechaAbajo.setBounds(237, 490, 50, 35);
@@ -84,7 +80,7 @@ public class View {
         flechaDerecha.setFocusable(false);
         flechaDerecha.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	PruebaMatriz.callMoverDerecha();
+            	juego.moverFicha(Direcciones.DERECHA);
             	actualizarTableroView();
             }
         });
@@ -96,8 +92,7 @@ public class View {
         flechaIzquierda.setFocusable(false);
         flechaIzquierda.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	PruebaMatriz.callMoverIzquierda();
-            	actualizarTableroView();
+
             }
         });
         flechaIzquierda.setBounds(177, 459, 50, 35);
@@ -111,7 +106,7 @@ public class View {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 jlabels[i][j] = new JLabel();
-                int valorFicha = PruebaMatriz.devolverValor(i, j);
+                int valorFicha = juego.devolverValor(i, j).getValor();
                 jlabels[i][j].setText(String.valueOf(valorFicha));
                 jlabels[i][j].setOpaque(true);
                 jlabels[i][j].setBackground(Color.white);
@@ -156,7 +151,7 @@ public class View {
     private void actualizarTableroView() {
     	for (int i = 0; i < 4; i++) {
     		for (int j = 0; j < 4; j++) {
-            	int nuevoValor = PruebaMatriz.devolverValor(i, j);
+            	int nuevoValor = juego.devolverValor(i,j).getValor();
             	jlabels[i][j].setText(String.valueOf(nuevoValor));
         	}
     	}    

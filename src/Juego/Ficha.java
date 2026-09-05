@@ -3,7 +3,7 @@ package Juego;
 import java.util.Random;
 
 public class Ficha {
-    int valor;
+    private int valor;
 
     public Ficha () {
         Random random = new Random();
@@ -23,5 +23,10 @@ public class Ficha {
     @Override
     public String toString() {
         return String.valueOf(valor);
+    }
+
+    public static Ficha convinarFichas(Ficha ficha1, Ficha ficha2){
+        Ficha fichafinal= new Ficha(ficha1.getValor()+ ficha2.getValor());
+        return fichafinal;
     }
 }
