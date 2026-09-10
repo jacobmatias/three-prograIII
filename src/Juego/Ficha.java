@@ -8,12 +8,14 @@ public class Ficha {
     public Ficha () {
         Random random = new Random();
         this.valor = random.nextInt(2) + 1;
-        ;
     }
+    
     public Ficha (int valor) {
-
         this.valor = valor;
-
+    }
+    
+    public boolean esVacia() {
+        return this.valor == 0;
     }
 
     public int getValor() {
@@ -26,7 +28,7 @@ public class Ficha {
     }
 
     public static Ficha convinarFichas(Ficha ficha1, Ficha ficha2){
-        Ficha fichafinal= new Ficha(ficha1.getValor()+ ficha2.getValor());
+        Ficha fichafinal = new Ficha(ficha1.getValor() + ficha2.getValor());
         return fichafinal;
     }
 }
