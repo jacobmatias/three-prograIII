@@ -1,8 +1,11 @@
 package Juego;
 
+import java.util.ArrayList;
+
 public class Juego {
     Tablero tablero;
-    static int puntaje = 0;
+    static int puntaje;
+    static ArrayList<Integer> listaPuntaje = new ArrayList<>();
 
     public Juego() {
         this.tablero = new Tablero();
@@ -22,11 +25,24 @@ public class Juego {
         }
     }
 
-    public static int getPuntaje() {
+    public int getPuntaje() {
         return puntaje;
+    }
+    
+    public void resetPuntaje() {
+    	puntaje = 0;
     }
 
     public boolean esGameOver() {
         return tablero.esGameOver();
+    }
+    
+    public void guardarPuntaje() {
+    	listaPuntaje.add(puntaje);
+    	System.out.println(listaPuntaje);
+    }
+    
+    public ArrayList<Integer> getListaPuntaje() {
+        return listaPuntaje;
     }
 }

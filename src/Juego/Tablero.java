@@ -8,6 +8,7 @@ import java.util.Random;
 public class Tablero {
     Ficha[][] matriz = new Ficha[4][4];
     static int nextRandom;
+    
 
     public Tablero() {
         List<Ficha> lista = new ArrayList<>();
@@ -187,6 +188,7 @@ public class Tablero {
         }
         return true;
     }
+   
 }
 
 
