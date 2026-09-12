@@ -15,7 +15,7 @@ public class Juego {
     public Ficha devolverValor(int i, int j) {
         return tablero.devolverValor(i, j);
     }
-
+/*
     public void moverFicha(Direccion direccion) {
         switch (direccion) {
             case DERECHA -> { tablero.moverDerecha(); }
@@ -23,6 +23,17 @@ public class Juego {
             case ABAJO -> { tablero.moverAbajo(); }
             case ARRIBA -> { tablero.moverArriba(); }
         }
+    }
+    */
+    public void moverFicha(Direccion dir) {
+        int puntosSumados = 0;
+        switch (dir) {
+            case ARRIBA -> puntosSumados = tablero.moverArriba();
+            case ABAJO -> puntosSumados = tablero.moverAbajo();
+            case IZQUIERDA -> puntosSumados = tablero.moverIzquierda();
+            case DERECHA -> puntosSumados = tablero.moverDerecha();
+        }
+        this.puntaje += puntosSumados;
     }
 
     public int getPuntaje() {
