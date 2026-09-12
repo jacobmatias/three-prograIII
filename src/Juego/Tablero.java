@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Tablero {
-    Ficha[][] matriz = new Ficha[4][4];
+    Ficha[][] matrizTablero = new Ficha[4][4];
+    static Ficha siguienteFicha;
     static int nextRandom;
     
 
@@ -23,100 +24,101 @@ public class Tablero {
         int k = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                this.matriz[i][j] = lista.get(k++);
+                this.matrizTablero[i][j] = lista.get(k++);
             }
         }
+        siguienteFicha = new Ficha();
     }
 
     public Ficha devolverValor(int i, int j) {
-        return matriz[i][j];
+        return matrizTablero[i][j];
     }
 
     public void moverArriba() {
-        Ficha[][] nuevaMatriz = this.matriz;
+        Ficha[][] nuevaMatrizTablero = this.matrizTablero;
         for (int columnas = 0; columnas <= 3; columnas++) {
             for (int filas = 0; filas <= 3; filas++) {
                 if (filas > 0) {
-                    if (nuevaMatriz[filas - 1][columnas].getValor() == 0) {
-                        nuevaMatriz[filas - 1][columnas] = Ficha.convinarFichas(nuevaMatriz[filas - 1][columnas], nuevaMatriz[filas][columnas]);
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
-                    } else if (comprobarCombinables(nuevaMatriz[filas][columnas].getValor(), nuevaMatriz[filas - 1][columnas].getValor())) {
-                        nuevaMatriz[filas - 1][columnas] = Ficha.convinarFichas(nuevaMatriz[filas - 1][columnas], nuevaMatriz[filas][columnas]);
-                        Juego.puntaje += nuevaMatriz[filas - 1][columnas].getValor();
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
+                    if (nuevaMatrizTablero[filas - 1][columnas].getValor() == 0) {
+                    	nuevaMatrizTablero[filas - 1][columnas] = Ficha.convinarFichas(nuevaMatrizTablero[filas - 1][columnas], nuevaMatrizTablero[filas][columnas]);
+                    	nuevaMatrizTablero[filas][columnas] = new Ficha(0);
+                    } else if (comprobarCombinables(nuevaMatrizTablero[filas][columnas].getValor(), nuevaMatrizTablero[filas - 1][columnas].getValor())) {
+                    	nuevaMatrizTablero[filas - 1][columnas] = Ficha.convinarFichas(nuevaMatrizTablero[filas - 1][columnas], nuevaMatrizTablero[filas][columnas]);
+                        Juego.puntaje += nuevaMatrizTablero[filas - 1][columnas].getValor();
+                        nuevaMatrizTablero[filas][columnas] = new Ficha(0);
                     }
                 }
             }
         }
-        this.matriz = nuevaMatriz;
-        agregarFicha(nuevaMatriz, Direcciones.ARRIBA);
+        this.matrizTablero = nuevaMatrizTablero;
+        agregarFicha(nuevaMatrizTablero, Direccion.ARRIBA);
     }
 
     public void moverAbajo() {
-        Ficha[][] nuevaMatriz = this.matriz;
+        Ficha[][] nuevaMatrizTablero = this.matrizTablero;
         for (int columnas = 0; columnas <= 3; columnas++) {
             for (int filas = 3; filas >= 0; filas--) {
                 if (filas < 3) {
-                    if (nuevaMatriz[filas + 1][columnas].getValor() == 0) {
-                        nuevaMatriz[filas + 1][columnas] = Ficha.convinarFichas(nuevaMatriz[filas + 1][columnas], nuevaMatriz[filas][columnas]);
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
-                    } else if (comprobarCombinables(nuevaMatriz[filas][columnas].getValor(), nuevaMatriz[filas + 1][columnas].getValor())) {
-                        nuevaMatriz[filas + 1][columnas] = Ficha.convinarFichas(nuevaMatriz[filas + 1][columnas], nuevaMatriz[filas][columnas]);
-                        Juego.puntaje += nuevaMatriz[filas + 1][columnas].getValor();
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
+                    if (nuevaMatrizTablero[filas + 1][columnas].getValor() == 0) {
+                    	nuevaMatrizTablero[filas + 1][columnas] = Ficha.convinarFichas(nuevaMatrizTablero[filas + 1][columnas], nuevaMatrizTablero[filas][columnas]);
+                    	nuevaMatrizTablero[filas][columnas] = new Ficha(0);
+                    } else if (comprobarCombinables(nuevaMatrizTablero[filas][columnas].getValor(), nuevaMatrizTablero[filas + 1][columnas].getValor())) {
+                    	nuevaMatrizTablero[filas + 1][columnas] = Ficha.convinarFichas(nuevaMatrizTablero[filas + 1][columnas], nuevaMatrizTablero[filas][columnas]);
+                        Juego.puntaje += nuevaMatrizTablero[filas + 1][columnas].getValor();
+                        nuevaMatrizTablero[filas][columnas] = new Ficha(0);
                     }
                 }
             }
         }
-        this.matriz = nuevaMatriz;
-        agregarFicha(nuevaMatriz, Direcciones.ABAJO);
+        this.matrizTablero = nuevaMatrizTablero;
+        agregarFicha(nuevaMatrizTablero, Direccion.ABAJO);
     }
 
     public void moverIzquierda() {
-        Ficha[][] nuevaMatriz = this.matriz;
+        Ficha[][] nuevaMatrizTablero = this.matrizTablero;
         for (int filas = 0; filas <= 3; filas++) {
             for (int columnas = 0; columnas <= 3; columnas++) {
                 if (columnas > 0) {
-                    if (nuevaMatriz[filas][columnas - 1].getValor() == 0) {
-                        nuevaMatriz[filas][columnas - 1] = Ficha.convinarFichas(nuevaMatriz[filas][columnas - 1], nuevaMatriz[filas][columnas]);
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
-                    } else if (comprobarCombinables(nuevaMatriz[filas][columnas].getValor(), nuevaMatriz[filas][columnas - 1].getValor())) {
-                        nuevaMatriz[filas][columnas - 1] = Ficha.convinarFichas(nuevaMatriz[filas][columnas - 1], nuevaMatriz[filas][columnas]);
-                        Juego.puntaje += nuevaMatriz[filas][columnas - 1].getValor();
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
+                    if (nuevaMatrizTablero[filas][columnas - 1].getValor() == 0) {
+                    	nuevaMatrizTablero[filas][columnas - 1] = Ficha.convinarFichas(nuevaMatrizTablero[filas][columnas - 1], nuevaMatrizTablero[filas][columnas]);
+                    	nuevaMatrizTablero[filas][columnas] = new Ficha(0);
+                    } else if (comprobarCombinables(nuevaMatrizTablero[filas][columnas].getValor(), nuevaMatrizTablero[filas][columnas - 1].getValor())) {
+                    	nuevaMatrizTablero[filas][columnas - 1] = Ficha.convinarFichas(nuevaMatrizTablero[filas][columnas - 1], nuevaMatrizTablero[filas][columnas]);
+                        Juego.puntaje += nuevaMatrizTablero[filas][columnas - 1].getValor();
+                        nuevaMatrizTablero[filas][columnas] = new Ficha(0);
                     }
                 }
             }
         }
-        this.matriz = nuevaMatriz;
-        agregarFicha(nuevaMatriz, Direcciones.IZQUIERDA);
+        this.matrizTablero = nuevaMatrizTablero;
+        agregarFicha(nuevaMatrizTablero, Direccion.IZQUIERDA);
     }
 
     public void moverDerecha() {
-        Ficha[][] nuevaMatriz = this.matriz;
+        Ficha[][] nuevaMatrizTablero = this.matrizTablero;
         for (int filas = 0; filas <= 3; filas++) {
             for (int columnas = 3; columnas >= 0; columnas--) {
                 if (columnas < 3) {
-                    if (nuevaMatriz[filas][columnas + 1].getValor() == 0) {
-                        nuevaMatriz[filas][columnas + 1] = Ficha.convinarFichas(nuevaMatriz[filas][columnas + 1], nuevaMatriz[filas][columnas]);
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
-                    } else if (comprobarCombinables(nuevaMatriz[filas][columnas].getValor(), nuevaMatriz[filas][columnas + 1].getValor())) {
-                        nuevaMatriz[filas][columnas + 1] = Ficha.convinarFichas(nuevaMatriz[filas][columnas + 1], nuevaMatriz[filas][columnas]);
-                        Juego.puntaje += nuevaMatriz[filas][columnas + 1].getValor();
-                        nuevaMatriz[filas][columnas] = new Ficha(0);
+                    if (nuevaMatrizTablero[filas][columnas + 1].getValor() == 0) {
+                    	nuevaMatrizTablero[filas][columnas + 1] = Ficha.convinarFichas(nuevaMatrizTablero[filas][columnas + 1], nuevaMatrizTablero[filas][columnas]);
+                    	nuevaMatrizTablero[filas][columnas] = new Ficha(0);
+                    } else if (comprobarCombinables(nuevaMatrizTablero[filas][columnas].getValor(), nuevaMatrizTablero[filas][columnas + 1].getValor())) {
+                    	nuevaMatrizTablero[filas][columnas + 1] = Ficha.convinarFichas(nuevaMatrizTablero[filas][columnas + 1], nuevaMatrizTablero[filas][columnas]);
+                        Juego.puntaje += nuevaMatrizTablero[filas][columnas + 1].getValor();
+                        nuevaMatrizTablero[filas][columnas] = new Ficha(0);
                     }
                 }
             }
         }
-        this.matriz = nuevaMatriz;
-        agregarFicha(nuevaMatriz, Direcciones.DERECHA);
+        this.matrizTablero = nuevaMatrizTablero;
+        agregarFicha(nuevaMatrizTablero, Direccion.DERECHA);
     }
 
     private static boolean comprobarCombinables(int valor, int valor2) {
         return (valor >= 3 && valor2 == valor) || (valor2 == 2 && valor == 1) || (valor2 == 1 && valor == 2);
     }
 
-    public static void agregarFicha(Ficha[][] matriz, Direcciones direccion) {
+    public void agregarFicha(Ficha[][] matriz, Direccion direccion) {
         List<int[]> posicionesVacia = new ArrayList<>();
 
         switch (direccion) {
@@ -153,10 +155,14 @@ public class Tablero {
         if (posicionesVacia.size() > 1) {
             int posicionAleatoria = generarAleatorio(0, posicionesVacia.size());
             int[] posicion = posicionesVacia.get(posicionAleatoria);
-            matriz[posicion[0]][posicion[1]] = new Ficha();
+            //matriz[posicion[0]][posicion[1]] = new Ficha();
+            matriz[posicion[0]][posicion[1]] = siguienteFicha;
+            siguienteFicha = new Ficha();
         } else if (posicionesVacia.size() == 1) {
             int[] posicion = posicionesVacia.getFirst();
-            matriz[posicion[0]][posicion[1]] = new Ficha();
+            //matriz[posicion[0]][posicion[1]] = new Ficha();
+            matriz[posicion[0]][posicion[1]] = siguienteFicha;
+            siguienteFicha = new Ficha();
         }
     }
 
@@ -169,7 +175,7 @@ public class Tablero {
     public boolean esGameOver() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (matriz[i][j].esVacia()) {
+                if (matrizTablero[i][j].esVacia()) {
                     return false;
                 }
             }
@@ -177,18 +183,20 @@ public class Tablero {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                int actual = matriz[i][j].getValor();
-                if (j + 1 < 4 && comprobarCombinables(actual, matriz[i][j + 1].getValor())) {
+                int actual = matrizTablero[i][j].getValor();
+                if (j + 1 < 4 && comprobarCombinables(actual, matrizTablero[i][j + 1].getValor())) {
                     return false;
                 }
-                if (i + 1 < 4 && comprobarCombinables(actual, matriz[i + 1][j].getValor())) {
+                if (i + 1 < 4 && comprobarCombinables(actual, matrizTablero[i + 1][j].getValor())) {
                     return false;
                 }
             }
         }
         return true;
     }
-   
+    public Ficha getSiguienteFicha() {
+        return siguienteFicha;
+    }
 }
 
 

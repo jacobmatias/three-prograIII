@@ -16,7 +16,7 @@ public class Juego {
         return tablero.devolverValor(i, j);
     }
 
-    public void moverFicha(Direcciones direccion) {
+    public void moverFicha(Direccion direccion) {
         switch (direccion) {
             case DERECHA -> { tablero.moverDerecha(); }
             case IZQUIERDA -> { tablero.moverIzquierda(); } // Agregada la llamada que faltaba
@@ -39,10 +39,13 @@ public class Juego {
     
     public void guardarPuntaje() {
     	listaPuntaje.add(puntaje);
-    	System.out.println(listaPuntaje);
     }
     
     public ArrayList<Integer> getListaPuntaje() {
         return listaPuntaje;
+    }
+    
+    public int mostrarValorSiguienteFicha() {
+    	return tablero.getSiguienteFicha().getValor();
     }
 }

@@ -1,5 +1,5 @@
 package Juego;
 
-public enum Direcciones {
+public enum Direccion {
     IZQUIERDA,DERECHA,ARRIBA,ABAJO
 }

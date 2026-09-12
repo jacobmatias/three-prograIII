@@ -16,12 +16,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JPanel;
 
 public class View {
 
     private JFrame frame;
     private JLabel[][] jlabels = new JLabel[4][4];
     private JLabel lblPuntaje;
+    private JLabel lblSiguienteFicha;
     private Juego juego = new Juego();
     
 
@@ -61,13 +63,21 @@ public class View {
         lblPuntaje.setHorizontalAlignment(SwingConstants.CENTER);
         lblPuntaje.setBounds(10, 11, 110, 34);
         frame.getContentPane().add(lblPuntaje);
+        
+        lblSiguienteFicha = new JLabel("\"<html><div align='center'>NEXT<br><font size='6'>\"");
+        lblSiguienteFicha.setOpaque(true);
+        lblSiguienteFicha.setBackground(new Color(220, 245, 225));
+        lblSiguienteFicha.setFont(new Font("Arial", Font.BOLD, 16));
+        lblSiguienteFicha.setHorizontalAlignment(SwingConstants.CENTER);
+        lblSiguienteFicha.setBounds(454, 11, 77, 74);
+        frame.getContentPane().add(lblSiguienteFicha);
        
         JButton flechaArriba = new JButton("▲");
         flechaArriba.setBackground(Color.GREEN);
         flechaArriba.setFocusable(false);
         flechaArriba.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                juego.moverFicha(Direcciones.ARRIBA);
+                juego.moverFicha(Direccion.ARRIBA);
                 actualizarTableroView();
             }
         });
@@ -79,7 +89,7 @@ public class View {
         flechaAbajo.setFocusable(false);
         flechaAbajo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                juego.moverFicha(Direcciones.ABAJO);
+                juego.moverFicha(Direccion.ABAJO);
                 actualizarTableroView();
             }
         });
@@ -91,7 +101,7 @@ public class View {
         flechaDerecha.setFocusable(false);
         flechaDerecha.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                juego.moverFicha(Direcciones.DERECHA);
+                juego.moverFicha(Direccion.DERECHA);
                 actualizarTableroView();
             }
         });
@@ -103,7 +113,7 @@ public class View {
         flechaIzquierda.setFocusable(false);
         flechaIzquierda.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                juego.moverFicha(Direcciones.IZQUIERDA);
+                juego.moverFicha(Direccion.IZQUIERDA);
                 actualizarTableroView();
             }
         });
@@ -129,6 +139,8 @@ public class View {
         });
         btnNewButton.setBounds(10, 527, 127, 23);
         frame.getContentPane().add(btnNewButton);
+        
+
 
         int ejeX = 132;
         int ejeY = 96;
@@ -160,13 +172,13 @@ public class View {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    juego.moverFicha(Direcciones.ARRIBA);
+                    juego.moverFicha(Direccion.ARRIBA);
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    juego.moverFicha(Direcciones.ABAJO);
+                    juego.moverFicha(Direccion.ABAJO);
                 } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    juego.moverFicha(Direcciones.IZQUIERDA);
+                    juego.moverFicha(Direccion.IZQUIERDA);
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    juego.moverFicha(Direcciones.DERECHA);
+                    juego.moverFicha(Direccion.DERECHA);
                 }
                 actualizarTableroView();
             }
@@ -178,6 +190,10 @@ public class View {
 
     private void actualizarTableroView() {
     	lblPuntaje.setText("SCORE: " + juego.getPuntaje());
+    	
+    	lblSiguienteFicha.setText("<html><div align='center'>NEXT<br><font size='6'>" 
+        	    + juego.mostrarValorSiguienteFicha() 
+        	    + "</font></div></html>");
     	
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -255,5 +271,4 @@ public class View {
         }
         ventanaHistorial.setVisible(true);
     }
-   
 }
