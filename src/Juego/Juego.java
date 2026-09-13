@@ -15,16 +15,7 @@ public class Juego {
     public Ficha devolverValor(int i, int j) {
         return tablero.devolverValor(i, j);
     }
-/*
-    public void moverFicha(Direccion direccion) {
-        switch (direccion) {
-            case DERECHA -> { tablero.moverDerecha(); }
-            case IZQUIERDA -> { tablero.moverIzquierda(); } // Agregada la llamada que faltaba
-            case ABAJO -> { tablero.moverAbajo(); }
-            case ARRIBA -> { tablero.moverArriba(); }
-        }
-    }
-    */
+
     public void moverFicha(Direccion dir) {
         int puntosSumados = 0;
         switch (dir) {
